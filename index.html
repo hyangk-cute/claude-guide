@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude 시작 가이드</title>
+  <style>
+    :root {
+      --orange: #d97706;
+      --orange-light: #fef3c7;
+      --orange-mid: #f59e0b;
+      --bg: #fafaf9;
+      --card: #ffffff;
+      --text: #1c1917;
+      --muted: #78716c;
+      --border: #e7e5e4;
+      --step-bg: #fff7ed;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+      color: #fff;
+      padding: 60px 24px 50px;
+      text-align: center;
+    }
+    header .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    header .logo-icon {
+      width: 52px; height: 52px;
+      background: var(--orange-mid);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    header h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.5px; }
+    header p { color: #a8a29e; font-size: 1.05rem; margin-top: 8px; }
+
+    /* ── TOC ── */
+    .toc {
+      max-width: 820px;
+      margin: 40px auto 0;
+      padding: 0 24px;
+    }
+    .toc-inner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+    .toc-inner h2 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .toc-list a {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text); cursor: pointer;
+      font-size: 1rem; font-weight: 500;
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: background .15s;
+    }
+    .toc-list a:hover { background: var(--step-bg); }
+    .toc-list .num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--orange-mid); color: #fff;
+      font-size: .82rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 820px;
+      margin: 56px auto 0;
+      padding: 0 24px;
+    }
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 28px;
+    }
+    .section-num {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--orange-mid); color: #fff;
+      font-size: 1.25rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 1.55rem; font-weight: 700;
+    }
+
+    /* ── STEP CARD ── */
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .step-card-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 24px;
+      background: var(--step-bg);
+      border-bottom: 1px solid #fde68a;
+    }
+    .step-badge {
+      background: var(--orange);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .step-card-header h3 { font-size: 1.05rem; font-weight: 600; }
+    .step-card-body { padding: 20px 24px; }
+    .step-card-body p { color: #44403c; font-size: .97rem; margin-bottom: 12px; }
+    .step-card-body p:last-child { margin-bottom: 0; }
+
+    /* ── SCREENSHOT PLACEHOLDER ── */
+    .screenshot-box {
+      border: 2px dashed #d6d3d1;
+      border-radius: 12px;
+      background: #f5f5f4;
+      padding: 40px 20px;
+      text-align: center;
+      margin: 16px 0;
+    }
+    .screenshot-box .icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .screenshot-box .label { font-size: .9rem; color: var(--muted); font-weight: 500; }
+    .screenshot-box .hint { font-size: .82rem; color: #a8a29e; margin-top: 4px; }
+
+    /* actual screenshot images */
+    .screenshot-box img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* ── TIP / WARN BOXES ── */
+    .tip, .warn {
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: .93rem;
+      margin: 16px 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tip { background: #f0fdf4; border-left: 4px solid #22c55e; color: #166534; }
+    .warn { background: #fff7ed; border-left: 4px solid var(--orange-mid); color: #92400e; }
+    .tip-icon, .warn-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── PRICE TABLE ── */
+    .price-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: .93rem;
+    }
+    .price-table th {
+      background: #1c1917; color: #fff;
+      padding: 12px 16px; text-align: left;
+    }
+    .price-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:nth-child(even) td { background: #fafaf9; }
+    .badge-free { background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+    .badge-pro { background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+    .badge-team { background: #ede9fe; color: #5b21b6; padding: 2px 8px; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+
+    /* ── OS TABS ── */
+    .os-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .os-tab {
+      padding: 8px 18px; border-radius: 8px;
+      border: 2px solid var(--border);
+      background: var(--card);
+      font-size: .9rem; font-weight: 600; cursor: default;
+    }
+    .os-tab.active { border-color: var(--orange-mid); background: var(--orange-light); color: var(--orange); }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 820px;
+      margin: 60px auto 40px;
+      padding: 0 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+    footer a { color: var(--orange); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 56px 0 0; }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🤖</div>
+    <span style="font-size:1.6rem;font-weight:700;">Claude</span>
+  </div>
+  <h1>Claude 시작 가이드</h1>
+  <p>가입부터 Pro 결제, 데스크탑 앱 설치까지 — 한 번에 끝내기</p>
+</header>
+
+<!-- ===== TOC ===== -->
+<nav class="toc">
+  <div class="toc-inner">
+    <h2>목차</h2>
+    <ul class="toc-list">
+      <li><a href="#signup"><span class="num">1</span>회원 가입 방법</a></li>
+      <li><a href="claude-manual-pro.html"><span class="num">2</span>Pro 버전 결제 방법</a></li>
+      <li><a href="claude-manual-desktop.html"><span class="num">3</span>데스크탑 앱 설치 방법</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== SECTION 1: 가입 ===== -->
+<section class="section" id="signup">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>회원 가입 방법</h2>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 1</span>
+      <h3>claude.ai 접속</h3>
+    </div>
+    <div class="step-card-body">
+      <p>웹 브라우저(Chrome, Edge, Safari 등)를 열고 주소창에 <strong>claude.ai</strong> 를 입력한 후 Enter를 누릅니다.</p>
+      <div class="screenshot-box">
+        <img src="signup-01-main.png" alt="claude.ai 메인 화면" />
+      </div>
+      <p>화면 중앙 또는 우측 상단의 <strong>"Sign up"</strong> 버튼을 클릭합니다.</p>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 2</span>
+      <h3>가입 방법 선택</h3>
+    </div>
+    <div class="step-card-body">
+      <p>3가지 방법 중 하나를 선택해 가입할 수 있습니다.</p>
+      <div class="screenshot-box">
+        <img src="signup-02-method.png" alt="가입 방법 선택 화면" />
+      </div>
+      <table class="price-table">
+        <thead>
+          <tr><th>가입 방법</th><th>특징</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🔵 Google 계정으로 계속</td><td>구글 계정이 있으면 가장 빠름 (한 번의 클릭)</td></tr>
+          <tr><td>🍎 Apple 계정으로 계속</td><td>Apple ID 사용자에게 편리</td></tr>
+          <tr><td>📧 이메일로 가입</td><td>직접 이메일·비밀번호 입력</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Step 3 (Google) -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 3</span>
+      <h3>이메일로 가입하는 경우</h3>
+    </div>
+    <div class="step-card-body">
+      <p><strong>① 이메일 주소 입력</strong> → <strong>"Continue"</strong> 버튼 클릭</p>
+      <div class="screenshot-box">
+        <img src="signup-03-email.png" alt="Google 계정으로 가입 화면" />
+      </div>
+      <p><strong>② 이메일 인증</strong> — 입력한 이메일로 인증 코드(6자리)가 발송됩니다. 이메일을 열어 코드를 확인하고 입력합니다.</p>
+      <div class="tip">
+        <span class="tip-icon">✅</span>
+        <span>인증 코드 이메일이 오지 않으면 <strong>스팸 폴더</strong>를 확인하세요. 5분 이내로 도착합니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 4</span>
+      <h3>이름 입력 및 약관 동의</h3>
+    </div>
+    <div class="step-card-body">
+      <p>성(First name)과 이름(Last name)을 입력하고, 이용약관 및 개인정보 처리방침에 동의합니다.</p>
+      <p><strong>"Continue"</strong> 를 클릭하면 가입이 완료되고, 바로 Claude를 사용할 수 있습니다!</p>
+      <div class="tip">
+        <span class="tip-icon">🎉</span>
+        <span>무료 플랜으로 즉시 사용 가능합니다. 일일 사용 한도 내에서 Claude와 대화할 수 있습니다.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 2: PRO ===== -->
+<section class="section" id="pro">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>Pro 버전 결제 방법</h2>
+  </div>
+
+  <!-- 요금제 비교 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">참고</span>
+      <h3>요금제 비교</h3>
+    </div>
+    <div class="step-card-body">
+      <table class="price-table">
+        <thead>
+          <tr><th>플랜</th><th>가격</th><th>주요 혜택</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge-free">Free</span></td>
+            <td>무료</td>
+            <td>일일 사용 한도, Claude 3.5 Sonnet 접근</td>
+          </tr>
+          <tr>
+            <td><span class="badge-pro">Pro</span></td>
+            <td>$20 / 월</td>
+            <td>5배 더 많은 사용량, 최신 모델 우선 접근, Projects 기능, 파일 업로드 강화</td>
+          </tr>
+          <tr>
+            <td><span class="badge-team">Team</span></td>
+            <td>$25~30 / 월·인</td>
+            <td>팀 협업, 관리자 기능, 더 높은 사용 한도</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 1</span>
+      <h3>결제 페이지로 이동</h3>
+    </div>
+    <div class="step-card-body">
+      <p>로그인 후 좌측 하단의 계정 아이콘 또는 <strong>"Upgrade to Pro"</strong> 배너를 클릭합니다.</p>
+      <div class="screenshot-box">
+        <img src="pro-01-upgrade.png" alt="Upgrade plan 메뉴" />
+      </div>
+      <p>또는 직접 <strong>claude.ai/settings/billing</strong> 주소로 접속합니다.</p>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 2</span>
+      <h3>Pro 플랜 선택</h3>
+    </div>
+    <div class="step-card-body">
+      <p>요금제 비교 화면에서 <strong>Pro</strong> 플랜의 <strong>"Subscribe"</strong> 버튼을 클릭합니다.</p>
+      <div class="screenshot-box">
+        <img src="pro-02-plans.png" alt="요금제 선택 화면" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 3</span>
+      <h3>결제 정보 입력 (Stripe)</h3>
+    </div>
+    <div class="step-card-body">
+      <p>Stripe 결제 페이지가 열립니다. 아래 정보를 입력하세요:</p>
+      <div class="screenshot-box">
+        <img src="pro-03-stripe.png" alt="Pro 결제 정보 입력 화면" />
+      </div>
+      <table class="price-table">
+        <thead><tr><th>입력 항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Card number</td><td>신용/체크카드 16자리 번호</td></tr>
+          <tr><td>Expiry date</td><td>카드 만료일 (MM/YY)</td></tr>
+          <tr><td>CVC</td><td>카드 뒷면 3자리 보안 코드</td></tr>
+          <tr><td>Name on card</td><td>카드에 적힌 영문 이름</td></tr>
+          <tr><td>Country</td><td>청구지 국가 선택</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">
+        <span class="warn-icon">⚠️</span>
+        <span>한국 카드의 경우 <strong>해외 결제가 활성화된 카드</strong>가 필요합니다. 은행 앱에서 해외 결제를 허용으로 변경한 후 시도하세요.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 4</span>
+      <h3>구독 확인 및 완료</h3>
+    </div>
+    <div class="step-card-body">
+      <p><strong>"Subscribe"</strong> 버튼을 클릭하면 결제가 완료됩니다. 영수증이 이메일로 발송됩니다.</p>
+      <div class="screenshot-box">
+        <img src="pro-04-card.png" alt="카드 결제 입력 화면" />
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🔄</span>
+        <span>구독은 매월 자동 갱신됩니다. 언제든지 <strong>Settings → Billing</strong>에서 취소할 수 있습니다.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 3: DESKTOP ===== -->
+<section class="section" id="desktop">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>데스크탑 앱 설치 방법</h2>
+  </div>
+
+  <!-- OS 탭 -->
+  <div class="os-tabs">
+    <div class="os-tab active">🪟 Windows</div>
+    <div class="os-tab">🍎 macOS</div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 1</span>
+      <h3>다운로드 페이지 접속</h3>
+    </div>
+    <div class="step-card-body">
+      <p>브라우저에서 <strong>claude.ai/download</strong> 에 접속하거나, Claude 웹 화면 좌측 하단 메뉴에서 <strong>"Download the app"</strong>을 클릭합니다.</p>
+      <div class="screenshot-box">
+        <img src="desktop-01-download.png" alt="앱 다운로드 진입 버튼" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 Windows -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 2</span>
+      <h3>🪟 Windows — 설치 파일 다운로드</h3>
+    </div>
+    <div class="step-card-body">
+      <p><strong>"Download for Windows"</strong> 버튼을 클릭하면 <code>Claude-Setup-x64.exe</code> 파일이 다운로드됩니다.</p>
+      <div class="screenshot-box">
+        <img src="desktop-download-page.png" alt="Download for Windows 버튼" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 Windows -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 3</span>
+      <h3>🪟 Windows — 설치 실행</h3>
+    </div>
+    <div class="step-card-body">
+      <p>다운로드된 <code>.exe</code> 파일을 더블클릭하여 실행합니다.</p>
+      <p>Windows Defender 보안 경고가 뜨면 <strong>"추가 정보" → "실행"</strong>을 클릭합니다. 설치는 자동으로 완료되며, 완료 후 Claude 앱이 자동으로 실행됩니다.</p>
+      <div class="warn">
+        <span class="warn-icon">🛡️</span>
+        <span>Windows SmartScreen 경고가 나타날 수 있습니다. "추가 정보"를 클릭한 뒤 "실행"을 선택하면 설치가 진행됩니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: 로그인 -->
+  <div class="step-card">
+    <div class="step-card-header">
+      <span class="step-badge">STEP 4</span>
+      <h3>앱 실행 및 로그인</h3>
+    </div>
+    <div class="step-card-body">
+      <p>설치된 Claude 앱을 실행하면 로그인 화면이 나타납니다. 가입 시 사용한 계정으로 로그인합니다.</p>
+      <div class="screenshot-box">
+        <img src="app-welcome.png" alt="데스크탑 앱 실행 후 화면" />
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🚀</span>
+        <span>데스크탑 앱은 시스템 트레이에 상주하여 단축키로 빠르게 호출할 수 있습니다. (기본: <strong>Alt + Space</strong> / Windows 기준)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<hr class="divider" style="max-width:820px;margin:56px auto 0;padding:0 24px;" />
+<footer>
+  <p style="margin-bottom:8px;">문의 및 지원</p>
+  <p>공식 도움말: <a href="https://support.anthropic.com" target="_blank">support.anthropic.com</a> &nbsp;|&nbsp; 공식 사이트: <a href="https://claude.ai" target="_blank">claude.ai</a></p>
+  <p style="margin-top:20px; color:#a8a29e;">© 2025 Anthropic · Claude 시작 가이드 · 내부 배포용</p>
+</footer>
+
+</body>
+</html>
