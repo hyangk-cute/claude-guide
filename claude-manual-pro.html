@@ -179,30 +179,26 @@
           <span class="plan-badge free-b">Free</span>
           <div class="plan-price">$0 <span>/ 월</span></div>
           <ul class="plan-features">
-            <li>일일 사용 한도</li>
-            <li>Claude 3.5 Sonnet</li>
-            <li>기본 파일 업로드</li>
+            <li>일일 사용 한도 있음</li>
+            <li>Claude Sonnet 4.6 무료 이용</li>
           </ul>
         </div>
         <div class="plan-card highlight">
           <span class="plan-badge pro-b">⭐ Pro</span>
-          <div class="plan-price">$20 <span>/ 월</span></div>
+          <div class="plan-price">$22 <span>/ 월</span></div>
           <ul class="plan-features">
-            <li>5배 더 많은 사용량</li>
-            <li>최신 모델 우선 접근</li>
+            <li>무료 대비 약 5배 사용량</li>
+            <li>최신 모델(Opus 포함)</li>
+            <li>Claude Code 이용 가능</li>
             <li>Projects 기능</li>
-            <li>강화된 파일 업로드</li>
-            <li>우선 응답 속도</li>
           </ul>
         </div>
-        <div class="plan-card">
-          <span class="plan-badge team-b">Team</span>
-          <div class="plan-price">$25 <span>/ 월·인</span></div>
+        <div class="plan-card" style="border-color:#f9a8d4;">
+          <span class="plan-badge" style="background:#fce7f3;color:#9d174d;">Max</span>
+          <div class="plan-price">$110~220 <span>/ 월</span></div>
           <ul class="plan-features">
-            <li>Pro 모든 기능 포함</li>
-            <li>팀 협업 워크스페이스</li>
-            <li>관리자 대시보드</li>
-            <li>최소 5인</li>
+            <li>Pro 대비 5배($110)</li>
+            <li>또는 20배($220) 사용량</li>
           </ul>
         </div>
       </div>
@@ -249,6 +245,10 @@
       <h3>결제 정보 입력 (Stripe)</h3>
     </div>
     <div class="step-card-body">
+      <div class="warn">
+        <span class="warn-icon">📅</span>
+        <div>결제 주기는 반드시 <strong>월간(Monthly)</strong>으로 선택하세요. 연간(Annual) 결제는 중도 취소 시 환불이 어렵습니다.</div>
+      </div>
       <p>Stripe 보안 결제 창이 열립니다. 아래 항목을 모두 입력하세요.</p>
       <div class="ss-box">
         <img src="pro-03-stripe.png" alt="Pro plan 결제 화면 - 월/연 선택 및 주문 상세" />
@@ -281,7 +281,7 @@
           <label class="form-label">Country</label>
           <div class="form-input">South Korea (KR)</div>
         </div>
-        <button class="btn-subscribe">Subscribe — $20.00 / month</button>
+        <button class="btn-subscribe">Subscribe — $22.00 / month</button>
       </div>
 
       <table class="tbl">
@@ -295,15 +295,6 @@
         </tbody>
       </table>
 
-      <div class="warn">
-        <span class="warn-icon">⚠️</span>
-        <div>
-          <strong>한국 카드 결제 전 체크사항</strong><br>
-          • 해외 온라인 결제가 활성화되어 있어야 합니다.<br>
-          • 카드사 앱 → 해외 결제 → "허용"으로 변경 후 시도하세요.<br>
-          • VISA / Mastercard / AMEX 브랜드 카드 사용을 권장합니다.
-        </div>
-      </div>
     </div>
   </div>
 
@@ -321,6 +312,10 @@
       <div class="tip">
         <span class="tip-icon">🔄</span>
         <span>구독은 <strong>매월 자동 갱신</strong>됩니다. 언제든지 <strong>Settings → Billing → Cancel subscription</strong>에서 취소할 수 있습니다.</span>
+      </div>
+      <div class="warn">
+        <span class="warn-icon">⚠️</span>
+        <span>자동결제로 인한 익월분 구독료는 지원 불가로 개인사용분 처리되므로, 결제 수단 변경 또는 해지 등 <strong>결제 수단 관리</strong> 부탁드립니다.</span>
       </div>
       <div class="tip">
         <span class="tip-icon">💰</span>
